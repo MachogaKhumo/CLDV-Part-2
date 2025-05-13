@@ -1,0 +1,62 @@
+﻿@using EventEaseBookingSystem.Models
+@model IEnumerable<Venue>
+
+@{
+    ViewData["Title"] = "Venues";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-success mb-3">Add New Venue</a>
+</p>
+
+<!-- Search Form -->
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Search by name or location" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No venues found matching your search.</div>
+}
+else
+{
+    <table class="table table-striped table-bordered" style="background-color: #2d578a;">
+        <thead class="table-dark">
+            <tr>
+                <th>Venue Name</th>
+                <th>Location</th>
+                <th>Capacity</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.VenueName</td>
+                    <td>@item.Location</td>
+                    <td>@item.Capacity</td>
+                    <td style="width: 120px; vertical-align: middle;">
+                        <div style="width: 100px; height: 100px; overflow: hidden; border-radius: 8px;">
+                            <img src="@(!string.IsNullOrEmpty(item.ImageUrl) ? item.ImageUrl : "https://eventeaseblobpt2.blob.core.windows.net/venues/conference-hall.jpg")"
+                                 alt="Venue Image"
+                                 style="width: 100%; height: 100%; object-fit: cover;"
+                                 onerror="this.src='https://eventeaseblobpt2.blob.core.windows.net/venues/conference-hall.jpg';" />
+                        </div>
+                    </td>
+                    <td class="text-nowrap">
+                        <a asp-action="Details" asp-route-id="@item.VenueId" style="background-color: #c9def4; color: black; border-radius: 5px; padding: 8px 12px;">Details</a>
+                        <a asp-action="Edit" asp-route-id="@item.VenueId" style="background-color: #f5ccd4; color: black; border-radius: 5px; padding: 8px 12px;">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.VenueId" style="background-color: #b8a4c9; color: black; border-radius: 5px; padding: 8px 12px;">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

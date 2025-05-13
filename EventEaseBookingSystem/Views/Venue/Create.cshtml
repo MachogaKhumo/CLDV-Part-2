@@ -1,0 +1,57 @@
+﻿@model Venue
+@using EventEaseBookingSystem.Models
+
+@{
+    ViewData["Title"] = "Add New Venue";
+}
+
+<h2 style="color: #007bff; font-size: 24px;">@ViewData["Title"]</h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label asp-for="VenueName" class="form-label"></label>
+        <input asp-for="VenueName" class="form-control" />
+        <span asp-validation-for="VenueName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Location" class="form-label"></label>
+        <input asp-for="Location" class="form-control" />
+        <span asp-validation-for="Location" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Capacity" class="form-label"></label>
+        <input asp-for="Capacity" class="form-control" />
+        <span asp-validation-for="Capacity" class="text-danger"></span>
+    </div>
+
+    <!-- Option 1: Upload New Image -->
+    <div class="mb-3">
+        <label for="ImageFile" class="form-label">Upload New Image</label>
+        <input type="file" name="ImageFile" class="form-control" />
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
+    </div>
+
+    <!-- Option 2: Select Existing Image from Azure Blob -->
+    <div class="mb-3">
+        <label for="ImageUrl" class="form-label">Or Select Existing Image</label>
+        <select asp-for="ImageUrl" class="form-control">
+            <option value="">-- Select from existing --</option>
+            <option value="https://eventeaseblobpt2.blob.core.windows.net/venues/wedding-venue.jpg">Wedding Venue</option>
+            <option value="https://eventeaseblobpt2.blob.core.windows.net/venues/conference-hall.jpg">Conference Hall</option>
+        </select>
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <button type="submit" style="background-color: #ed6a5e; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px;">Save</button>
+    <a asp-action="Index" style="background-color: #6c757d; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Cancel</a>
+</form>
+
+@if (!string.IsNullOrEmpty(Model?.ImageUrl))
+{
+    <div class="mt-4">
+        <h4>Selected Image:</h4>
+        <img src="@Model.ImageUrl" alt="Venue Image" style="max-width: 300px; max-height: 200px;" />
+    </div>
+}

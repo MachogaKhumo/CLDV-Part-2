@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "storage1": {
+      "type": "storage",
+      "connectionId": "StorageConnection"
+    },
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:DatabaseConnection"
+    }
+  }
+}
